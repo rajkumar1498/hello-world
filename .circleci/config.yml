@@ -3,8 +3,11 @@ version: 2.1
 # Use a package of configuration called an orb.
 commands:
   print_pipeline_id:
+    parameters:
+      id:
+        type: string
     steps:
-      - run: echo ${CIRCLE_WORKFLOW_ID}
+      - run: echo << parameters.id >>
 orbs:
   # Declare a dependency on the welcome-orb
   welcome: circleci/welcome-orb@0.4.1
@@ -32,6 +35,7 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - print_pipeline_id
+            id: << pipeline.id >>
 workflows:
   # Name the workflow "welcome"
   my_workflow:
